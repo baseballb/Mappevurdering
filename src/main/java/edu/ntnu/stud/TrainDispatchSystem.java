@@ -6,7 +6,7 @@ public class TrainDispatchSystem {
     HashMap<String, TrainDeparture> trainDepartures = new HashMap<>();
     public TrainDispatchSystem() {
     }
-    public void addTrainDeparture(TrainDeparture trainDeparture) {
+    public void addTrainDeparture(TrainDeparture trainDeparture) throws IllegalArgumentException{
         if (trainDepartures.containsKey(trainDeparture.getTrainId())) {
             throw new IllegalArgumentException("Train with id " + trainDeparture.getTrainId() + " already exists");
         } else {
