@@ -12,33 +12,50 @@ class TrainDispatchSystemTest {
         TrainDispatchSystem trainDispatchSystem = new TrainDispatchSystem();
         TrainDeparture trainDeparture = new TrainDeparture("42", "Trondheim", "12:00", "Oslo");
         trainDispatchSystem.addTrainDeparture(trainDeparture);
-        assertEquals(trainDeparture, trainDispatchSystem.getTrainDeparture("42"));
+        assertEquals(trainDeparture, trainDispatchSystem.getTrainDepartureBasedOnID("42"));
     }
     @Test
-    void testGetTrainDeparture() {
+    void testGetTrainDepartureBasedOnID() {
         TrainDispatchSystem trainDispatchSystem = new TrainDispatchSystem();
         TrainDeparture trainDeparture = new TrainDeparture("42", "Trondheim", "12:00", "Oslo");
         trainDispatchSystem.addTrainDeparture(trainDeparture);
-        assertEquals(trainDeparture, trainDispatchSystem.getTrainDeparture("42"));
+        assertEquals(trainDeparture, trainDispatchSystem.getTrainDepartureBasedOnID("42"));
+    }
+
+    // Tests that the getTrainDeparturesBasedOnDestination method returns a list of all the trains with the given destination.
+    @Test
+    void testGetTrainDeparturesBasedOnDestination() {
+        TrainDispatchSystem trainDispatchSystem = new TrainDispatchSystem();
+        TrainDeparture trainDeparture1 = new TrainDeparture("42", "Trondheim", "12:00", "Oslo");
+        TrainDeparture trainDeparture2 = new TrainDeparture("43", "Trondheim", "13:00", "Oslo");
+        TrainDeparture trainDeparture3 = new TrainDeparture("44", "Trondheim", "11:00", "Oslo");
+        trainDispatchSystem.addTrainDeparture(trainDeparture1);
+        trainDispatchSystem.addTrainDeparture(trainDeparture2);
+        trainDispatchSystem.addTrainDeparture(trainDeparture3);
+        List<TrainDeparture> departuresForDestination = trainDispatchSystem.getTrainDeparturesBasedOnDestination("Oslo");
+        assertEquals(3, departuresForDestination.size());
+        assertTrue(departuresForDestination.contains(trainDeparture1));
+        assertTrue(departuresForDestination.contains(trainDeparture2));
+        assertTrue(departuresForDestination.contains(trainDeparture3));
     }
     @Test
     void testGetTrainDepartureReturnsNull() {
         TrainDispatchSystem trainDispatchSystem = new TrainDispatchSystem();
         TrainDeparture trainDeparture = new TrainDeparture("42", "Trondheim", "12:00", "Oslo");
         trainDispatchSystem.addTrainDeparture(trainDeparture);
-        assertNull(trainDispatchSystem.getTrainDeparture("43"));
+        assertNull(trainDispatchSystem.getTrainDepartureBasedOnID("43"));
     }
     @Test
     void testGetTrainDepartureReturnsNullWhenEmpty() {
         TrainDispatchSystem trainDispatchSystem = new TrainDispatchSystem();
-        assertNull(trainDispatchSystem.getTrainDeparture("43"));
+        assertNull(trainDispatchSystem.getTrainDepartureBasedOnID("43"));
     }
     @Test
     void testGetTrainDepartureReturnsNullWhenWrongId() {
         TrainDispatchSystem trainDispatchSystem = new TrainDispatchSystem();
         TrainDeparture trainDeparture = new TrainDeparture("42", "Trondheim", "12:00", "Oslo");
         trainDispatchSystem.addTrainDeparture(trainDeparture);
-        assertNull(trainDispatchSystem.getTrainDeparture("43"));
+        assertNull(trainDispatchSystem.getTrainDepartureBasedOnID("43"));
     }
     @Test
     void testTrainDispatchSystem() {
@@ -68,7 +85,7 @@ class TrainDispatchSystemTest {
         trainDispatchSystem.addDelayToTrain("42", "01:00");
         assertEquals("01:00", trainDeparture.getDelay().toString());
     }
-    @Test
+    @Test // Tests that the listAllTrains method returns a list of all the trains in the system, sorted by departure time.
     void testListAllTrains() {
         TrainDispatchSystem trainDispatchSystem = new TrainDispatchSystem();
         TrainDeparture trainDeparture1 = new TrainDeparture("42", "Trondheim", "12:00", "Oslo");
@@ -82,6 +99,7 @@ class TrainDispatchSystemTest {
         assertEquals(trainDeparture1, trainDepartures.get(1));
         assertEquals(trainDeparture2, trainDepartures.get(2));
     }
+
 
 
 }
