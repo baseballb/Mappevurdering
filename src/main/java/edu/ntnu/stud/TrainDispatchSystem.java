@@ -1,35 +1,23 @@
 package edu.ntnu.stud;
 
+import edu.ntnu.stud.TrainDeparture;
+
 import java.util.*;
 
-/**
- * This is the main class for the train dispatch application.
- */
-public class TrainDispatchSystem { // TODO: Fill in the class definition
-  static HashMap<String, TrainDeparture> trainDepartures = new HashMap<>();
+public class TrainDispatchSystem {
+  private HashMap<String, TrainDeparture> trainDepartures = new HashMap<>();
 
-  // The constructor creates a new HashMap that will contain the train departures.
-  public TrainDispatchSystem() {
-  }
-  public void addTrainDeparture(TrainDeparture trainDeparture) throws IllegalArgumentException{
-    // Throws an IllegalArgumentException if a train with the same id already exists.
-    if (trainDepartures.containsKey(trainDeparture.getTrainId())) {
-      throw new IllegalArgumentException("Train with id " + trainDeparture.getTrainId() + " already exists");
+  public void addTrainDeparture(String trainId, String line, String departureTime, String destination) throws IllegalArgumentException {
+    if (trainDepartures.containsKey(trainId)) {
+      throw new IllegalArgumentException("Train with id " + trainId + " already exists");
     } else {
-      // Adds the train departure to the HashMap.
-      trainDepartures.put(trainDeparture.getTrainId(), trainDeparture);
+      TrainDeparture newTrainDeparture = new TrainDeparture(trainId, line, departureTime, destination);
+      trainDepartures.put(trainId, newTrainDeparture);
     }
   }
-  public static TrainDeparture getTrainDepartureBasedOnID(String trainId) {
-    if (trainId == null || trainId.isEmpty()) {
-      throw new IllegalArgumentException("Train ID cannot be null or empty");
-    }
-    TrainDeparture trainDeparture = trainDepartures.get(trainId);
-    if (trainDeparture == null) {
-      System.out.println("No train departure found with the provided ID");
-      return null;
-    }
-    return trainDeparture;
+
+  public TrainDeparture getTrainDepartureBasedOnID(String trainId) {
+    return trainDepartures.get(trainId);
   }
 
   public List<TrainDeparture> getTrainDeparturesBasedOnDestination(String destination) {
@@ -41,33 +29,21 @@ public class TrainDispatchSystem { // TODO: Fill in the class definition
     }
     return departuresForDestination;
   }
+
   public void assignTrainToTrack(String trainId, int trackNumber) {
     TrainDeparture trainDeparture = trainDepartures.get(trainId);
     trainDeparture.setTrackNumber(trackNumber);
   }
+
   public void addDelayToTrain(String trainId, String delay) {
     TrainDeparture trainDeparture = trainDepartures.get(trainId);
     trainDeparture.setDelay(delay);
   }
+
   public List<TrainDeparture> listAllTrains() {
     Collection<TrainDeparture> departureValues = trainDepartures.values();
     List<TrainDeparture> departureList = new ArrayList<>(departureValues);
-    departureList.sort(new Comparator<TrainDeparture>() {
-      @Override
-      public int compare(TrainDeparture o1, TrainDeparture o2) {
-        return o1.getDepartureTime().compareTo(o2.getDepartureTime());
-      }
-    });
+    departureList.sort(Comparator.comparing(TrainDeparture::getDepartureTime));
     return departureList;
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    for (Map.Entry<String, TrainDeparture> entry : trainDepartures.entrySet()) {
-      sb.append(entry.getValue().toString());
-      sb.append("\n");
-    }
-    return sb.toString();
   }
 }

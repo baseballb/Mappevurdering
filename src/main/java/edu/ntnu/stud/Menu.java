@@ -27,15 +27,16 @@ public class Menu {
 
       controller.processChoice(choice);
 
-      System.out.println("Press Enter to continue...");
-      scanner.nextLine(); // wait for user to press Enter
+      if (choice != 8) { // Does not wait for user to press Enter if choice is 8
+        System.out.println("Press Enter to continue...");
+        scanner.nextLine(); // wait for user to press Enter so that they can read the output
+      }
     } while (choice != 8);
   }
 
   public int processChoice() {
     System.out.println("Enter your choice: ");
-    int choice = Integer.parseInt(scanner.nextLine());
-    return choice;
+    return Integer.parseInt(scanner.nextLine());
   }
   public void start(TrainDispatchController controller) {
     init(controller);
