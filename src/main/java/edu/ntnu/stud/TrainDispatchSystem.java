@@ -1,13 +1,16 @@
 package edu.ntnu.stud;
 
-import edu.ntnu.stud.TrainDeparture;
-
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class TrainDispatchSystem {
   private HashMap<String, TrainDeparture> trainDepartures = new HashMap<>();
 
   public void addTrainDeparture(String trainId, String line, String departureTime, String destination) throws IllegalArgumentException {
+    // TODO: Add error handling for wrong inputs (wrong time format, etc.)
     if (trainDepartures.containsKey(trainId)) {
       throw new IllegalArgumentException("Train with id " + trainId + " already exists");
     } else {
@@ -17,6 +20,7 @@ public class TrainDispatchSystem {
   }
 
   public TrainDeparture getTrainDepartureBasedOnID(String trainId) {
+    // TODO: Add error handling
     return trainDepartures.get(trainId);
   }
 

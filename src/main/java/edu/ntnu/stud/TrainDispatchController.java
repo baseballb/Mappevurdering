@@ -1,16 +1,36 @@
 package edu.ntnu.stud;
 
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
+import java.time.LocalTime;
 
+/**
+ * The TrainDispatchController class is responsible for handling user input and controlling the application flow.
+ * It uses a Scanner to read user input and calls methods on the TrainDispatchSystem class based on this input.
+ */
 public class TrainDispatchController {
   private TrainDispatchSystem trainDispatchSystem;
   private Scanner scanner;
 
+  /**
+   * Constructor for the TrainDispatchController class.
+   * Initializes the TrainDispatchSystem and Scanner objects.
+   *
+   * @param trainDispatchSystem The TrainDispatchSystem that this controller will interact with.
+   * @param scanner The Scanner that this controller will use to read user input.
+   */
   public TrainDispatchController(TrainDispatchSystem trainDispatchSystem, Scanner scanner) {
     this.trainDispatchSystem = trainDispatchSystem;
     this.scanner = scanner;
   }
 
+  /**
+   * This method processes the user's choice.
+   * It reads the user's choice as an integer, and calls the appropriate
+   * method on the TrainDispatchSystem based on this choice.
+   *
+   * @param choice The user's choice as an integer.
+   */
   public void processChoice(int choice) {
     switch (choice) {
       case 1:
@@ -21,12 +41,34 @@ public class TrainDispatchController {
         System.out.println("Legg til ny togavgang");
         System.out.println("Enter train ID: ");
         String trainId = scanner.nextLine();
+        if (trainId == null || trainId.isEmpty()) {
+          System.out.println("Train ID cannot be null or empty");
+          return;
+        }
         System.out.println("Enter line: ");
         String line = scanner.nextLine();
+        if (line == null || line.isEmpty()) {
+          System.out.println("Line cannot be null or empty");
+          return;
+        }
         System.out.println("Enter departure time (HH:MM): ");
         String departureTime = scanner.nextLine();
+        if (departureTime == null || departureTime.isEmpty()) {
+          System.out.println("Departure time cannot be null or empty");
+          return;
+        }
+        try {
+          LocalTime.parse(departureTime);
+        } catch (DateTimeParseException e) {
+          System.out.println("Invalid departure time format. It should be HH:MM");
+          return;
+        }
         System.out.println("Enter destination: ");
         String destination = scanner.nextLine();
+        if (destination == null || destination.isEmpty()) {
+          System.out.println("Destination cannot be null or empty");
+          return;
+        }
         try {
           trainDispatchSystem.addTrainDeparture(trainId, line, departureTime, destination);
           System.out.println("Train departure added successfully.");
