@@ -6,20 +6,30 @@ import java.util.*;
  * This is the main class for the train dispatch application.
  */
 public class TrainDispatchSystem { // TODO: Fill in the class definition
-  HashMap<String, TrainDeparture> trainDepartures = new HashMap<>();
+  static HashMap<String, TrainDeparture> trainDepartures = new HashMap<>();
 
   // The constructor creates a new HashMap that will contain the train departures.
   public TrainDispatchSystem() {
   }
   public void addTrainDeparture(TrainDeparture trainDeparture) throws IllegalArgumentException{
+    // Throws an IllegalArgumentException if a train with the same id already exists.
     if (trainDepartures.containsKey(trainDeparture.getTrainId())) {
       throw new IllegalArgumentException("Train with id " + trainDeparture.getTrainId() + " already exists");
     } else {
+      // Adds the train departure to the HashMap.
       trainDepartures.put(trainDeparture.getTrainId(), trainDeparture);
     }
   }
-  public TrainDeparture getTrainDepartureBasedOnID(String trainId) {
-    return trainDepartures.get(trainId);
+  public static TrainDeparture getTrainDepartureBasedOnID(String trainId) {
+    if (trainId == null || trainId.isEmpty()) {
+      throw new IllegalArgumentException("Train ID cannot be null or empty");
+    }
+    TrainDeparture trainDeparture = trainDepartures.get(trainId);
+    if (trainDeparture == null) {
+      System.out.println("No train departure found with the provided ID");
+      return null;
+    }
+    return trainDeparture;
   }
 
   public List<TrainDeparture> getTrainDeparturesBasedOnDestination(String destination) {

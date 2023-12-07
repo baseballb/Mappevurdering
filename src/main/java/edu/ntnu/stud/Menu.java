@@ -9,7 +9,7 @@ public class Menu {
     this.scanner = new Scanner(System.in);
   }
 
-  public void init() {
+  public void init(TrainDispatchController controller) {
     int choice;
 
     do {
@@ -22,35 +22,23 @@ public class Menu {
       System.out.println("6. Søk etter togavgang (Destinasjon)");
       System.out.println("7. Oppdater klokken");
       System.out.println("8. Avslutt programmet");
-      System.out.print("Enter your choice: ");
-      choice = scanner.nextInt();
 
-      processChoice(choice);
+      choice = processChoice();
+
+      controller.processChoice(choice);
+
+      System.out.println("Press Enter to continue...");
+      scanner.nextLine(); // wait for user to press Enter
     } while (choice != 8);
   }
 
-  public void processChoice(int choice) {
-    switch (choice) {
-      case 1 -> System.out.println("You've selected Option 1");
-      // Implement functionality for Option 1
-      case 2 -> System.out.println("You've selected Option 2");
-      // Implement functionality for Option 2
-      case 3 -> System.out.println("You've selected Option 3");
-      // Implement functionality for Option 3
-      case 4 -> System.out.println("You've selected Option 4");
-      // Implement functionality for Option 4
-      case 5 -> System.out.println("You've selected Option 5");
-      // Implement functionality for Option 5
-      case 6 -> System.out.println("You've selected Option 6");
-      // Implement functionality for Option 6
-      case 7 -> System.out.println("You've selected Option 7");
-      // Implement functionality for Option 7
-      case 8 -> System.out.println("Avslutter programmet...");
-      default -> System.out.println("Invalid choice. Please enter a valid option (1-8).");
-    }
+  public int processChoice() {
+    System.out.println("Enter your choice: ");
+    int choice = Integer.parseInt(scanner.nextLine());
+    return choice;
   }
-  public void start() {
-    init();
+  public void start(TrainDispatchController controller) {
+    init(controller);
     scanner.close();
   }
 }

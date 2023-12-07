@@ -22,6 +22,25 @@ class TrainDispatchSystemTest {
         assertEquals(trainDeparture, trainDispatchSystem.getTrainDepartureBasedOnID("42"));
     }
 
+    @Test
+    void testGetTrainDepartureBasedOnIDReturnsNull() {
+        TrainDispatchSystem trainDispatchSystem = new TrainDispatchSystem();
+        TrainDeparture trainDeparture = new TrainDeparture("42", "Trondheim", "12:00", "Oslo");
+        trainDispatchSystem.addTrainDeparture(trainDeparture);
+        assertNull(trainDispatchSystem.getTrainDepartureBasedOnID("43"));
+    }
+    @Test
+    void testGetTrainDepartureBasedOnIDReturnsNullWhenEmpty() {
+        TrainDispatchSystem trainDispatchSystem = new TrainDispatchSystem();
+        assertNull(trainDispatchSystem.getTrainDepartureBasedOnID("43"));
+    }
+    @Test
+    void testGetTrainDepartureBasedOnIDReturnsNullWhenWrongId() {
+        TrainDispatchSystem trainDispatchSystem = new TrainDispatchSystem();
+        TrainDeparture trainDeparture = new TrainDeparture("42", "Trondheim", "12:00", "Oslo");
+        trainDispatchSystem.addTrainDeparture(trainDeparture);
+        assertNull(trainDispatchSystem.getTrainDepartureBasedOnID("43"));
+    }
     // Tests that the getTrainDeparturesBasedOnDestination method returns a list of all the trains with the given destination.
     @Test
     void testGetTrainDeparturesBasedOnDestination() {
@@ -39,23 +58,46 @@ class TrainDispatchSystemTest {
         assertTrue(departuresForDestination.contains(trainDeparture3));
     }
     @Test
-    void testGetTrainDepartureReturnsNull() {
+    void testGetTrainDeparturesBasedOnDestinationReturnsEmptyList() {
         TrainDispatchSystem trainDispatchSystem = new TrainDispatchSystem();
-        TrainDeparture trainDeparture = new TrainDeparture("42", "Trondheim", "12:00", "Oslo");
-        trainDispatchSystem.addTrainDeparture(trainDeparture);
-        assertNull(trainDispatchSystem.getTrainDepartureBasedOnID("43"));
+        List<TrainDeparture> departuresForDestination = trainDispatchSystem.getTrainDeparturesBasedOnDestination("Oslo");
+        assertEquals(0, departuresForDestination.size());
     }
     @Test
-    void testGetTrainDepartureReturnsNullWhenEmpty() {
+    void testGetTrainDeparturesBasedOnDestinationReturnsEmptyListWhenWrongDestination() {
         TrainDispatchSystem trainDispatchSystem = new TrainDispatchSystem();
-        assertNull(trainDispatchSystem.getTrainDepartureBasedOnID("43"));
+        TrainDeparture trainDeparture1 = new TrainDeparture("42", "Trondheim", "12:00", "Oslo");
+        TrainDeparture trainDeparture2 = new TrainDeparture("43", "Trondheim", "13:00", "Oslo");
+        TrainDeparture trainDeparture3 = new TrainDeparture("44", "Trondheim", "11:00", "Oslo");
+        trainDispatchSystem.addTrainDeparture(trainDeparture1);
+        trainDispatchSystem.addTrainDeparture(trainDeparture2);
+        trainDispatchSystem.addTrainDeparture(trainDeparture3);
+        List<TrainDeparture> departuresForDestination = trainDispatchSystem.getTrainDeparturesBasedOnDestination("Bergen");
+        assertEquals(0, departuresForDestination.size());
     }
     @Test
-    void testGetTrainDepartureReturnsNullWhenWrongId() {
+    void testGetTrainDeparturesBasedOnDestinationReturnsEmptyListWhenEmpty() {
         TrainDispatchSystem trainDispatchSystem = new TrainDispatchSystem();
-        TrainDeparture trainDeparture = new TrainDeparture("42", "Trondheim", "12:00", "Oslo");
-        trainDispatchSystem.addTrainDeparture(trainDeparture);
-        assertNull(trainDispatchSystem.getTrainDepartureBasedOnID("43"));
+        List<TrainDeparture> departuresForDestination = trainDispatchSystem.getTrainDeparturesBasedOnDestination("Oslo");
+        assertEquals(0, departuresForDestination.size());
+    }
+    @Test
+    void testGetTrainDeparturesBasedOnDestinationReturnsEmptyListWhenWrongDestinationAndEmpty() {
+        TrainDispatchSystem trainDispatchSystem = new TrainDispatchSystem();
+        List<TrainDeparture> departuresForDestination = trainDispatchSystem.getTrainDeparturesBasedOnDestination("Bergen");
+        assertEquals(0, departuresForDestination.size());
+    }
+    @Test
+    void testGetTrainDeparturesBasedOnDestinationReturnsEmptyListWhenWrongDestinationAndNotEmpty() {
+        TrainDispatchSystem trainDispatchSystem = new TrainDispatchSystem();
+        TrainDeparture trainDeparture1 = new TrainDeparture("42", "Trondheim", "12:00", "Oslo");
+        TrainDeparture trainDeparture2 = new TrainDeparture("43", "Trondheim", "13:00", "Oslo");
+        TrainDeparture trainDeparture3 = new TrainDeparture("44", "Trondheim", "11:00", "Oslo");
+        trainDispatchSystem.addTrainDeparture(trainDeparture1);
+        trainDispatchSystem.addTrainDeparture(trainDeparture2);
+        trainDispatchSystem.addTrainDeparture(trainDeparture3);
+        List<TrainDeparture> departuresForDestination = trainDispatchSystem.getTrainDeparturesBasedOnDestination("Bergen");
+        assertEquals(0, departuresForDestination.size());
     }
     @Test
     void testTrainDispatchSystem() {
