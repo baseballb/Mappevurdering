@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class TrainDispatchSystem {
-  private HashMap<String, TrainDeparture> trainDepartures = new HashMap<>();
+  private HashMap<Integer, TrainDeparture> trainDepartures = new HashMap<>();
 
-  public void addTrainDeparture(String trainId, String line, String departureTime, String destination) throws IllegalArgumentException {
+  public void addTrainDeparture(int trainId, String line, String departureTime, String destination) throws IllegalArgumentException {
     // TODO: Add error handling for wrong inputs (wrong time format, etc.)
     if (trainDepartures.containsKey(trainId)) {
       throw new IllegalArgumentException("Train with id " + trainId + " already exists");
@@ -19,7 +19,7 @@ public class TrainDispatchSystem {
     }
   }
 
-  public TrainDeparture getTrainDepartureBasedOnID(String trainId) {
+  public TrainDeparture getTrainDepartureBasedOnID(int trainId) {
     // TODO: Add error handling
     return trainDepartures.get(trainId);
   }
@@ -34,12 +34,12 @@ public class TrainDispatchSystem {
     return departuresForDestination;
   }
 
-  public void assignTrainToTrack(String trainId, int trackNumber) {
+  public void assignTrainToTrack(int trainId, int trackNumber) {
     TrainDeparture trainDeparture = trainDepartures.get(trainId);
     trainDeparture.setTrackNumber(trackNumber);
   }
 
-  public void addDelayToTrain(String trainId, String delay) {
+  public void addDelayToTrain(int trainId, String delay) {
     TrainDeparture trainDeparture = trainDepartures.get(trainId);
     trainDeparture.setDelay(delay);
   }

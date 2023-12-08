@@ -3,7 +3,7 @@ package edu.ntnu.stud;
 import java.time.LocalTime;
 
 public class TrainDeparture {
-  private final String trainId;
+  private final int trainId;
   /* trainId is final because it should not be possible to change the id of a train
     after it has been created.*/
   private final String line;
@@ -19,7 +19,7 @@ public class TrainDeparture {
   /* trackNumber is not final because it should be possible to change the track number of a train
     if the train is assigned to a different track.*/
   private LocalTime delay = LocalTime.of(0, 0);
-  public TrainDeparture(String trainId, String line, String departureTime, String destination) {
+  public TrainDeparture(int trainId, String line, String departureTime, String destination) {
     this.trainId = trainId;
     this.line = line;
     this.departureTime = LocalTime.parse(departureTime);
@@ -31,7 +31,7 @@ public class TrainDeparture {
 public void setDelay(String delay) {
     this.delay = LocalTime.parse(delay);
   }
-  public String getTrainId() {
+  public int getTrainId() {
     return trainId;
   }
   public String getLine() {

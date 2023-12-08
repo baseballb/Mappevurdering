@@ -40,11 +40,12 @@ public class TrainDispatchController {
       case 2:
         System.out.println("Legg til ny togavgang");
         System.out.println("Enter train ID: ");
-        String trainId = scanner.nextLine();
-        if (trainId == null || trainId.isEmpty()) {
-          System.out.println("Train ID cannot be null or empty");
-          return;
+        while (!scanner.hasNextInt()) {
+          System.out.println("That's not a number! Try again:");
+          scanner.next();
         }
+        int trainId = scanner.nextInt();
+        scanner.nextLine(); // Consume the remaining newline
         System.out.println("Enter line: ");
         String line = scanner.nextLine();
         if (line == null || line.isEmpty()) {
@@ -54,26 +55,26 @@ public class TrainDispatchController {
         System.out.println("Enter departure time (HH:MM): ");
         String departureTime = scanner.nextLine();
         if (departureTime == null || departureTime.isEmpty()) {
-          System.out.println("Departure time cannot be null or empty");
+          System.out.println("Avgangstid kan ikke være null eller tom");
           return;
         }
         try {
           LocalTime.parse(departureTime);
         } catch (DateTimeParseException e) {
-          System.out.println("Invalid departure time format. It should be HH:MM");
+          System.out.println("Ugyldig avgangstid. Skriv inn avgangstid på formatet HH:MM");
           return;
         }
-        System.out.println("Enter destination: ");
+        System.out.println("Skriv inn destinasjon:");
         String destination = scanner.nextLine();
         if (destination == null || destination.isEmpty()) {
-          System.out.println("Destination cannot be null or empty");
+          System.out.println("Destinasjon kan ikke være null eller tom");
           return;
         }
         try {
           trainDispatchSystem.addTrainDeparture(trainId, line, departureTime, destination);
-          System.out.println("Train departure added successfully.");
+          System.out.println("Togavgang lagt til!");
         } catch (IllegalArgumentException e) {
-          System.out.println("Error adding train departure: " + e.getMessage());
+          System.out.println("Klarte ikke å legge til togavgang: " + e.getMessage());
         }
         break;
       case 3:
@@ -86,11 +87,19 @@ public class TrainDispatchController {
         break;
       case 5:
         System.out.println("Søk etter togavgang (Tognummer)");
-        // Implement functionality for Option 5
-        System.out.println("Enter train ID: ");
-        String trainId_input = scanner.nextLine();
+        System.out.println("Skriv inn tognummer: ");
+        while (!scanner.hasNextInt()) {
+          System.out.println("Vennligst skriv inn et tall: ");
+          scanner.next(); // discard the non-integer input
+        }
+        int trainId_input = scanner.nextInt();
+        scanner.nextLine(); // consume the remaining newline
         TrainDeparture trainDeparture = trainDispatchSystem.getTrainDepartureBasedOnID(trainId_input);
-        System.out.println(trainDeparture);
+        if (trainDeparture == null) {
+          System.out.println("Fant ingen togavgang med tognummer " + trainId_input + ".");
+        } else {
+          System.out.println(trainDeparture);
+        }
         break;
       case 6:
         System.out.println("You've selected Option 6");
@@ -104,7 +113,7 @@ public class TrainDispatchController {
         System.out.println("Avslutter programmet...");
         break;
       default:
-        System.out.println("Invalid choice. Please enter a valid option (1-8).");
+        System.out.println("Ugyldig valg. Skriv inn et tall mellom 1 og 8.");
         break;
     }
   }
