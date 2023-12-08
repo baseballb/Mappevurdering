@@ -79,7 +79,26 @@ public class TrainDispatchController {
         break;
       case 3:
         System.out.println("Tildel spor til togavgang");
-        // Implement functionality for Option 3
+        System.out.println("Skriv inn tognummer: ");
+        while (!scanner.hasNextInt()) {
+          System.out.println("Vennligst skriv inn et tall:");
+          scanner.next(); // discard the non-integer input
+        }
+        int trainIdToAssign = scanner.nextInt();
+        scanner.nextLine(); // consume the remaining newline
+        System.out.println("Enter track number: ");
+        while (!scanner.hasNextInt()) {
+          System.out.println("Venligst skriv inn et tall:");
+          scanner.next(); // discard the non-integer input
+        }
+        int trackNumber = scanner.nextInt();
+        scanner.nextLine(); // consume the remaining newline
+        try {
+          trainDispatchSystem.assignTrainToTrack(trainIdToAssign, trackNumber);
+          System.out.println("Togavgang tildelt spor!");
+        } catch (IllegalArgumentException e) {
+          System.out.println("Kunne ikke tildele spor: " + e.getMessage());
+        }
         break;
       case 4:
         System.out.println("Legg til forsinkelse på togavgang");
@@ -92,11 +111,11 @@ public class TrainDispatchController {
           System.out.println("Vennligst skriv inn et tall: ");
           scanner.next(); // discard the non-integer input
         }
-        int trainId_input = scanner.nextInt();
+        int trainIdToSearch = scanner.nextInt();
         scanner.nextLine(); // consume the remaining newline
-        TrainDeparture trainDeparture = trainDispatchSystem.getTrainDepartureBasedOnID(trainId_input);
+        TrainDeparture trainDeparture = trainDispatchSystem.getTrainDepartureBasedOnID(trainIdToSearch);
         if (trainDeparture == null) {
-          System.out.println("Fant ingen togavgang med tognummer " + trainId_input + ".");
+          System.out.println("Fant ingen togavgang med tognummer " + trainIdToSearch + ".");
         } else {
           System.out.println(trainDeparture);
         }
