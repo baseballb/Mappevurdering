@@ -37,10 +37,6 @@ public class TrainDispatchController {
     String destination;
     switch (choice) {
       case 1:
-        System.out.println("Vis oversikt over togavganger");
-        System.out.println(trainDispatchSystem.listAllTrainsInTableFormat());
-        break;
-      case 2:
         System.out.println("Legg til ny togavgang");
         System.out.println("Enter train ID: ");
         while (!scanner.hasNextInt()) {
@@ -80,7 +76,7 @@ public class TrainDispatchController {
           System.out.println("Klarte ikke å legge til togavgang: " + e.getMessage());
         }
         break;
-      case 3:
+      case 2:
         System.out.println("Tildel spor til togavgang");
         System.out.println("Skriv inn tognummer: ");
         while (!scanner.hasNextInt()) {
@@ -103,7 +99,7 @@ public class TrainDispatchController {
           System.out.println("Kunne ikke tildele spor: " + e.getMessage());
         }
         break;
-      case 4:
+      case 3:
         System.out.println("Legg til forsinkelse på togavgang");
         System.out.println("Skriv inn tognummer: ");
         while (!scanner.hasNextInt()) {
@@ -131,7 +127,7 @@ public class TrainDispatchController {
           System.out.println("Error adding delay: " + e.getMessage());
         }
         break;
-      case 5:
+      case 4:
         System.out.println("Søk etter togavgang (Tognummer)");
         System.out.println("Skriv inn tognummer: ");
         while (!scanner.hasNextInt()) {
@@ -147,7 +143,7 @@ public class TrainDispatchController {
           System.out.println(trainDeparture);
         }
         break;
-      case 6:
+      case 5:
         System.out.println("Search for train departures based on destination");
         System.out.println("Enter destination: ");
         destination = scanner.nextLine();
@@ -164,7 +160,7 @@ public class TrainDispatchController {
           }
         }
         break;
-      case 7:
+      case 6:
         System.out.println("Update current time");
         System.out.println("Enter new time (HH:MM): ");
         String newTimeStr = scanner.nextLine();
@@ -176,12 +172,16 @@ public class TrainDispatchController {
           System.out.println("Invalid time format. It should be HH:MM");
         }
         break;
-      case 8:
+      case 7:
         System.out.println("Avslutter programmet...");
         break;
       default:
         System.out.println("Ugyldig valg. Skriv inn et tall mellom 1 og 8.");
         break;
     }
+  }
+
+  public TrainDispatchSystem getTrainDispatchSystem() {
+    return trainDispatchSystem;
   }
 }
