@@ -38,7 +38,7 @@ public class TrainDispatchController {
     switch (choice) {
       case 1:
         System.out.println("Vis oversikt over togavganger");
-        System.out.println(trainDispatchSystem.listAllTrains());
+        System.out.println(trainDispatchSystem.listAllTrainsInTableFormat());
         break;
       case 2:
         System.out.println("Legg til ny togavgang");

@@ -58,7 +58,13 @@ public class Menu {
    */
   public int processChoice() {
     System.out.println("Enter your choice: ");
-    return Integer.parseInt(scanner.nextLine());
+    while (!scanner.hasNextInt()) {
+      System.out.println("That's not a number! Try again:");
+      scanner.next();
+    }
+    int choice = scanner.nextInt();
+    scanner.nextLine(); // consume the remaining newline
+    return choice;
   }
 
   /**

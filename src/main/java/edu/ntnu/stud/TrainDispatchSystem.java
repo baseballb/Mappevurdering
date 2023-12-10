@@ -62,4 +62,34 @@ public class TrainDispatchSystem {
   public LocalTime getCurrentTime() {
     return this.currentTime;
   }
+
+  public String listAllTrainsInTableFormat() {
+    StringBuilder table = new StringBuilder();
+
+    // Display the current time
+    table.append("Current time: ").append(currentTime).append("\n\n");
+
+    String lineSeparator = "+------+--------+--------------+-------------+-------------+-------+\n";
+
+    // Table header
+    table.append(lineSeparator);
+    table.append("| ID   | Line   | Departure    | Destination | Track       | Delay |\n");
+    table.append(lineSeparator);
+
+    // Table rows
+    for (TrainDeparture departure : listAllTrains()) {
+      table.append(String.format("| %-4s | %-6s | %-12s | %-11s | %-11s | %-5s |\n",
+          departure.getTrainId(),
+          departure.getLine(),
+          departure.getDepartureTime(),
+          departure.getDestination(),
+          departure.getTrackNumber() == -1 ? "Not assigned" : Integer.toString(departure.getTrackNumber()),
+          departure.getDelay().equals(LocalTime.of(0, 0)) ? "None" : departure.getDelay().toString()));
+      table.append(lineSeparator);
+    }
+
+    return table.toString();
+  }
+
+
 }
