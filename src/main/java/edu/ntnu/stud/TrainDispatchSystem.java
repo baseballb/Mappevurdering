@@ -5,9 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.stream.Collectors;
+import java.time.LocalTime;
 
 public class TrainDispatchSystem {
   private HashMap<Integer, TrainDeparture> trainDepartures = new HashMap<>();
+  private LocalTime currentTime = LocalTime.of(6, 0); // Default to 06:00
 
   public void addTrainDeparture(int trainId, String line, String departureTime, String destination) throws IllegalArgumentException {
     // TODO: Add error handling for wrong inputs (wrong time format, etc.)
@@ -46,8 +49,17 @@ public class TrainDispatchSystem {
 
   public List<TrainDeparture> listAllTrains() {
     Collection<TrainDeparture> departureValues = trainDepartures.values();
-    List<TrainDeparture> departureList = new ArrayList<>(departureValues);
-    departureList.sort(Comparator.comparing(TrainDeparture::getDepartureTime));
-    return departureList;
+    return departureValues.stream()
+        .filter(departure -> !departure.getDepartureTime().isBefore(currentTime))
+        .sorted(Comparator.comparing(TrainDeparture::getDepartureTime))
+        .collect(Collectors.toList());
+  }
+
+  public void setCurrentTime(LocalTime newTime) {
+    this.currentTime = newTime;
+  }
+
+  public LocalTime getCurrentTime() {
+    return this.currentTime;
   }
 }

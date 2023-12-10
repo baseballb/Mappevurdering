@@ -165,8 +165,16 @@ public class TrainDispatchController {
         }
         break;
       case 7:
-        System.out.println("You've selected Option 7");
-        // Implement functionality for Option 7
+        System.out.println("Update current time");
+        System.out.println("Enter new time (HH:MM): ");
+        String newTimeStr = scanner.nextLine();
+        try {
+          LocalTime newTime = LocalTime.parse(newTimeStr);
+          trainDispatchSystem.setCurrentTime(newTime);
+          System.out.println("Current time updated successfully.");
+        } catch (DateTimeParseException e) {
+          System.out.println("Invalid time format. It should be HH:MM");
+        }
         break;
       case 8:
         System.out.println("Avslutter programmet...");
