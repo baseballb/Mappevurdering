@@ -50,15 +50,4 @@ public void setDelay(String delay) {
     return delay;
   }
 
-  @Override
-  public String toString() {
-    return "TrainDeparture{" +
-      "trainId='" + trainId + '\'' +
-      ", line='" + line + '\'' +
-      ", departureTime=" + departureTime +
-      ", destination='" + destination + '\'' +
-      ", trackNumber=" + trackNumber +
-      ", delay=" + delay +
-      '}';
-  }
 }
