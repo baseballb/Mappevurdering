@@ -140,8 +140,10 @@ public class TrainDispatchController {
         if (trainDeparture == null) {
           System.out.println("Fant ingen togavgang med tognummer " + trainId + ".");
         } else {
-          System.out.println(trainDeparture);
+          System.out.println(trainDispatchSystem.formatTrainsInTableFormat(List.of(trainDeparture)));
         }
+        System.out.println("Trykk enter for å fortsette...");
+        scanner.nextLine(); // wait for user to press enter
         break;
       case 5:
         System.out.println("Search for train departures based on destination");
@@ -155,10 +157,10 @@ public class TrainDispatchController {
         if (departuresForDestination.isEmpty()) {
           System.out.println("No train departures found for the provided destination");
         } else {
-          for (TrainDeparture departure : departuresForDestination) {
-            System.out.println(departure);
-          }
+          System.out.println(trainDispatchSystem.formatTrainsInTableFormat(departuresForDestination));
         }
+        System.out.println("Trykk enter for å fortsette...");
+        scanner.nextLine(); // wait for user to press enter
         break;
       case 6:
         System.out.println("Update current time");

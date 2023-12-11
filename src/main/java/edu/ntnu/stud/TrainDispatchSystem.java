@@ -56,14 +56,18 @@ public class TrainDispatchSystem {
   }
 
   public void setCurrentTime(LocalTime newTime) {
-    this.currentTime = newTime;
+    if (newTime.isAfter(currentTime)) {
+      this.currentTime = newTime;
+    } else {
+      throw new IllegalArgumentException("New time cannot be earlier than current time");
+    }
   }
 
   public LocalTime getCurrentTime() {
     return this.currentTime;
   }
 
-  public String listAllTrainsInTableFormat() {
+  public String formatTrainsInTableFormat(List<TrainDeparture> departures) {
     StringBuilder table = new StringBuilder();
 
     // Display the current time
@@ -77,7 +81,7 @@ public class TrainDispatchSystem {
     table.append(lineSeparator);
 
     // Table rows
-    for (TrainDeparture departure : listAllTrains()) {
+    for (TrainDeparture departure : departures) {
       table.append(String.format("| %-4s | %-6s | %-12s | %-11s | %-11s | %-5s |\n",
           departure.getTrainId(),
           departure.getLine(),
@@ -90,6 +94,4 @@ public class TrainDispatchSystem {
 
     return table.toString();
   }
-
-
 }
