@@ -157,4 +157,12 @@ public class Logic {
     }
   }
 
+  public void addTrainDeparture(int trainId, String line, String departureTime, String destination) {
+    trainDispatchSystem.addTrainDeparture(trainId, line, departureTime, destination);
+  }
+
+  public String listAllTrainsFormatted() {
+    return trainDispatchSystem.formatTrainsTableFormat(trainDispatchSystem.listAllTrains());
+  }
+
 }

@@ -20,6 +20,10 @@ public class UserInteraction {
   }
 
   public void start() {
+    // Add some train departures for testing
+    logic.addTrainDeparture(1, "L4", "10:00", "Oslo");
+    logic.addTrainDeparture(2, "R7", "11:00", "Røros");
+    logic.addTrainDeparture(3, "L4", "12:00", "Oslo");
     displayMenu();
   }
 
@@ -27,7 +31,7 @@ public class UserInteraction {
     int choice;
     do {
       clearScreen();
-      System.out.println(trainDispatchSystem.formatTrainsTableFormat(trainDispatchSystem.listAllTrains()));
+      System.out.println(logic.listAllTrainsFormatted());
       System.out.println("1. Legg til ny togavgang");
       System.out.println("2. Tildele spor til togavgang");
       System.out.println("3. Legg til forsinkelse på togavgang");
@@ -90,12 +94,14 @@ public class UserInteraction {
       scanner.nextLine(); // consume the remaining newline
       // Check if a train with the given ID exists
         if (shouldExist && logic.doesTrainExist(trainId)) {
-          continue;
+          break;
         } else if (!shouldExist && logic.doesTrainExist(trainId)) {
           System.out.println("Train with ID " + trainId + " already exists");
+          continue;
+        } else if (!shouldExist && !logic.doesTrainExist(trainId)) {
           break;
         } else {
-          break;
+          System.out.println("Train with ID " + trainId + " does not exist");
         }
     } while (true);
     // Return the valid train ID
