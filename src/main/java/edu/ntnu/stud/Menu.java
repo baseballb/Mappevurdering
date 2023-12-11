@@ -33,7 +33,7 @@ public class Menu {
 
     do {
       clearScreen();
-      System.out.println(controller.getTrainDispatchSystem().formatTrainsInTableFormat(controller.getTrainDispatchSystem().listAllTrains()));
+      System.out.println(controller.getTrainDispatchSystem().formatTrainsTableFormat(controller.getTrainDispatchSystem().listAllTrains()));
       System.out.println("Welcome to the Text-Based Menu");
       System.out.println("1. Legg til ny togavgang");
       System.out.println("2. Tildele spor til togavgang");

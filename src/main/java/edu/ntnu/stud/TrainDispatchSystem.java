@@ -10,7 +10,7 @@ import java.time.LocalTime;
 
 public class TrainDispatchSystem {
   private HashMap<Integer, TrainDeparture> trainDepartures = new HashMap<>();
-  private LocalTime currentTime = LocalTime.of(6, 0); // Default to 06:00
+  private LocalTime currentTime = LocalTime.of(0, 1); // Default to 00:01
 
   public void addTrainDeparture(int trainId, String line, String departureTime, String destination) throws IllegalArgumentException {
     // TODO: Add error handling for wrong inputs (wrong time format, etc.)
@@ -49,10 +49,11 @@ public class TrainDispatchSystem {
 
   public List<TrainDeparture> listAllTrains() {
     Collection<TrainDeparture> departureValues = trainDepartures.values();
-    return departureValues.stream()
-        .filter(departure -> !departure.getDepartureTime().isBefore(currentTime))
+    List<TrainDeparture> departureList = departureValues.stream()
+        .filter(departure -> !departure.getDepartureTime().plusHours(departure.getDelay().getHour()).plusMinutes(departure.getDelay().getMinute()).isBefore(currentTime))
         .sorted(Comparator.comparing(TrainDeparture::getDepartureTime))
         .collect(Collectors.toList());
+    return departureList;
   }
 
   public void setCurrentTime(LocalTime newTime) {
@@ -67,28 +68,42 @@ public class TrainDispatchSystem {
     return this.currentTime;
   }
 
-  public String formatTrainsInTableFormat(List<TrainDeparture> departures) {
+  public String formatTrainDeparture(TrainDeparture departure) {
+    String lineSeparator = "+------+--------+--------------+-------------+-------------+-------+\n";
+    StringBuilder table = new StringBuilder(lineSeparator);
+    table.append(String.format("| %-4s | %-6s | %-12s | %-11s | %-5s | %-5s |\n",
+        departure.getTrainId(),
+        departure.getLine(),
+        departure.getDepartureTime(),
+        departure.getDestination(),
+        departure.getDelay().equals(LocalTime.of(0, 0)) ? "" : departure.getDelay().toString(),
+        departure.getTrackNumber() == -1 ? "" : Integer.toString(departure.getTrackNumber())
+    ));
+    table.append(lineSeparator);
+    return table.toString();
+  }
+  public String formatTrainsTableFormat(List<TrainDeparture> departures) {
     StringBuilder table = new StringBuilder();
 
     // Display the current time
     table.append("Current time: ").append(currentTime).append("\n\n");
 
-    String lineSeparator = "+------+--------+--------------+-------------+-------------+-------+\n";
+    String lineSeparator = "+--------------+--------+------+-------------+-------+-------+\n";
 
     // Table header
     table.append(lineSeparator);
-    table.append("| ID   | Line   | Departure    | Destination | Track       | Delay |\n");
+    table.append("| Departure    | Line   | ID   | Destination | Delay | Track |\n");
     table.append(lineSeparator);
 
     // Table rows
     for (TrainDeparture departure : departures) {
-      table.append(String.format("| %-4s | %-6s | %-12s | %-11s | %-11s | %-5s |\n",
-          departure.getTrainId(),
-          departure.getLine(),
+      table.append(String.format("| %-12s | %-6s | %-4s | %-11s | %-5s | %-5s |\n",
           departure.getDepartureTime(),
+          departure.getLine(),
+          departure.getTrainId(),
           departure.getDestination(),
-          departure.getTrackNumber() == -1 ? "Not assigned" : Integer.toString(departure.getTrackNumber()),
-          departure.getDelay().equals(LocalTime.of(0, 0)) ? "None" : departure.getDelay().toString()));
+          departure.getDelay().equals(LocalTime.of(0, 0)) ? "" : departure.getDelay().toString(),
+          departure.getTrackNumber() == -1 ? "" : Integer.toString(departure.getTrackNumber())));
       table.append(lineSeparator);
     }
 
