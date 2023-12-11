@@ -120,7 +120,7 @@ public class TrainDispatchController {
         trainId = promptForTrainId(true);
 
         // Get the TrainDeparture object with the given train ID
-        trainDeparture = trainDispatchSystem.getTrainDepartureBasedOnID(trainId);
+        trainDeparture = trainDispatchSystem.getTrainDepartureBasedOnId(trainId);
 
         // If no TrainDeparture object was found, print an error message
         if (trainDeparture == null) {
@@ -207,7 +207,7 @@ public class TrainDispatchController {
       trainId = scanner.nextInt();
       scanner.nextLine(); // consume the remaining newline
       // Check if a train with the given ID exists
-      TrainDeparture trainDeparture = trainDispatchSystem.getTrainDepartureBasedOnID(trainId);
+      TrainDeparture trainDeparture = trainDispatchSystem.getTrainDepartureBasedOnId(trainId);
       // If the train ID should exist but doesn't, prompt the user again
       if (shouldExist && trainDeparture == null) {
         System.out.println("No train departure found with the provided ID");
