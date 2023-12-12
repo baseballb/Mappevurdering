@@ -1,31 +1,25 @@
 # Portfolio project IDATA1003 - 2023
 This file uses Mark Down syntax. For more information see [here](https://www.markdownguide.org/basic-syntax/).
-
-STUDENT NAME = "Gabriel Kjølsrud Bøhn"  
+ 
 STUDENT ID = "106342"
 
 ## Project description
 
-[//]: # (TODO: Write a short description of your project/product here.)
+This application is designed to manage train departures, allowing users to add new departures, assign tracks, add delays, and search for departures by train number or destination
 
 ## Project structure
 
-[//]: # (TODO: Describe the structure of your project here. How have you used packages in your structure. Where are all sourcefiles stored. Where are all JUnit-test classes stored. etc.)
+The project is divided into two main packages: edu.ntnu.stud and edu.ntnu.stud.test. The edu.ntnu.stud package contains the main source files of the application, while the edu.ntnu.stud.test package contains the JUnit test classes.
 
 ## Link to repository
 
-[//]: # (TODO: Include a link to your repository here.)
+https://github.com/baseballb/Mappevurdering/tree/master
 
 ## How to run the project
 
-[//]: # (TODO: Describe how to run your project here. What is the main class? What is the main method?
-What is the input and output of the program? What is the expected behaviour of the program?)
+Simply run trainDispatchApp.main() to run the application. The application will prompt the user to enter a command. 3 train departures are already added:
 
 ## How to run the tests
 
-[//]: # (TODO: Describe how to run the tests here.)
+Run the JUnit test classes in the edu.ntnu.stud.test package.
 
-## References
-
-[//]: # (TODO: Include references here, if any. For example, if you have used code from the course book, include a reference to the chapter.
-Or if you have used code from a website or other source, include a link to the source.)
