@@ -29,9 +29,8 @@ public class TrainDispatchSystem {
   public void addTrainDeparture(int trainId, String line,
                                 String departureTime, String destination)
       throws IllegalArgumentException {
-    // TODO: Add error handling for wrong inputs (wrong time format, etc.)
     if (trainDepartures.containsKey(trainId)) {
-      throw new IllegalArgumentException("Train with id " + trainId + " already exists");
+      throw new IllegalArgumentException("Tog med tognummer " + trainId + " finnes allerede");
     } else {
       TrainDeparture newTrainDeparture =
           new TrainDeparture(trainId, line, departureTime, destination);
@@ -57,7 +56,7 @@ public class TrainDispatchSystem {
    *
    * @return A list of TrainDeparture objects with the given destination.
    */
-  public List<TrainDeparture> getTrainDeparturesBasedOnDestination(String destination) {
+  public List<TrainDeparture> getTrainDeparturesFromDestination(String destination) {
     List<TrainDeparture> departuresForDestination = new ArrayList<>();
     for (TrainDeparture departure : trainDepartures.values()) {
       if (departure.getDestination().equals(destination)) {
@@ -137,7 +136,7 @@ public class TrainDispatchSystem {
     if (newTime.isAfter(currentTime)) {
       this.currentTime = newTime;
     } else {
-      throw new IllegalArgumentException("New time cannot be earlier than current time");
+      throw new IllegalArgumentException("Ny tid kan ikke være tidligere enn nåværende tid");
     }
   }
 
@@ -164,7 +163,7 @@ public class TrainDispatchSystem {
     StringBuilder table = new StringBuilder(lineSeparator);
 
     // Display the current time
-    table.append("Current time: ").append(currentTime).append("\n\n");
+    table.append("Klokka er: ").append(currentTime).append("\n\n");
 
     // Table header
     table.append("| Departure    | Line   | ID   | Destination | Delay | Track |\n");
@@ -193,7 +192,7 @@ public class TrainDispatchSystem {
    * @param departures The list of TrainDeparture objects to be formatted.
    * @return A string representing the list of TrainDeparture objects as a table.
    */
-  public String formatTrainsTableFormat(List<TrainDeparture> departures) {
+  public String formatTrainsToTable(List<TrainDeparture> departures) {
     StringBuilder table = new StringBuilder();
 
     // Display the current time
