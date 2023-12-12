@@ -69,6 +69,7 @@ public class Logic {
 
           destination = userInteraction.promptForDestination();
 
+          // This try-catch block was made by copilot
           try {
             trainDispatchSystem.addTrainDeparture(trainId, line, departureTime, destination);
             userInteraction.displayMessage("Togavgang lagt til!");
@@ -144,7 +145,7 @@ public class Logic {
           trainDeparture = trainDispatchSystem.getTrainDepartureBasedOnId(trainId);
 
           if (trainDeparture == null) {
-            userInteraction.displayMessage("No train departure found with the provided ID");
+            userInteraction.displayMessage("Ingen togavgang funnet med tognummer " + trainId + ".");
           } else {
             String formattedTrain = trainDispatchSystem.formatTrainDeparture(trainDeparture);
             userInteraction.displayMessage(formattedTrain);
@@ -180,13 +181,13 @@ public class Logic {
           // 3. Display a success message or an error message
           // 4. Wait for the user to press Enter before continuing
 
-          userInteraction.displayMessage("Update current time");
+          userInteraction.displayMessage("Oppdater klokkeslett");
           String newTimeStr = userInteraction.promptForTime();
           try {
             trainDispatchSystem.setCurrentTime(LocalTime.parse(newTimeStr));
-            userInteraction.displayMessage("Current time updated successfully.");
+            userInteraction.displayMessage("Klokkeslett oppdatert!");
           } catch (IllegalArgumentException e) {
-            userInteraction.displayMessage("Error updating current time: " + e.getMessage());
+            userInteraction.displayMessage("Feil ved oppdatering av klokkeslett " + e.getMessage());
           }
           userInteraction.waitForEnter();
           break;
@@ -218,13 +219,13 @@ public class Logic {
   public void addTrainDeparture(int trainId, String line,
                                 String departureTime, String destination) {
     if (destination == null || destination.isEmpty()) {
-      throw new IllegalArgumentException("Destination cannot be null or empty");
+      throw new IllegalArgumentException("Destinasjon kan ikke være tom");
     }
     try {
       LocalTime.parse(departureTime); // Validate the departure time format
       trainDispatchSystem.addTrainDeparture(trainId, line, departureTime, destination);
     } catch (DateTimeParseException e) {
-      throw new IllegalArgumentException("Invalid departure time format. It should be HH:MM");
+      throw new IllegalArgumentException("Tidspunkt må være i formatet HH:MM");
     } catch (Exception e) {
       userInteraction.handleError(e.getMessage());
     }

@@ -68,6 +68,9 @@ public class UserInteraction {
   }
 
   /**
+   * Copilot introduced me to this great way of avoiding using
+   * System.out.println() everywhere. This allowed me to keep UserInteraction as
+   * the only class that interacts with the user.
    * Displays a message to the user.
    *
    * @param message The message to display
@@ -128,6 +131,8 @@ public class UserInteraction {
   }
 
   /**
+   * Copilot had the good idea to add the "shouldExist" parameter to this method.
+   * This makes it possible to reuse the method for both adding and finding train departures.
    * Prompts the user for a train ID.
    * Checks if a train with the given ID exists based on the shouldExist parameter.
    * If shouldExist is true and the train exists,
