@@ -2,6 +2,7 @@
 This file uses Mark Down syntax. For more information see [here](https://www.markdownguide.org/basic-syntax/).
  
 STUDENT ID = "106342"
+NAME = Gabriel Kjølsrud Bøhn
 
 ## Project description
 
